@@ -15,6 +15,11 @@ class BlogViews(ModelViewSet):
     serializer_class = BlogSerializer
     permission_classes = [AllowAny]
 
+    def create_blog(request):
+        blog_obj = Blog(title=request.title, subtitle=request.subtitle,
+                        content=request.content, theme=request.theme, author=request.author)
+        return blog_obj
+
 
 class UserViews(ModelViewSet):
     queryset = User.objects.all()
