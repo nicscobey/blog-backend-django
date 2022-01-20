@@ -23,7 +23,7 @@ class BlogSerializer(ModelSerializer):
     class Meta:
         model = Blog
         fields = ["id", "title", "subtitle", "content",
-                  "theme", "created_at", "updated_at", "author"]
+                  "theme", "created_at", "updated_at", "author", "published"]
 
     # def get_id_from_author(self, blog):
     #     author = blog.author.id
