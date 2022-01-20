@@ -1,9 +1,14 @@
 from api.models import Blog
 from django.contrib.auth.models import User, Group
 from rest_framework.serializers import HyperlinkedModelSerializer, ModelSerializer, SerializerMethodField
+from django.contrib.auth.hashers import make_password
 
 
 class UserSerializer(ModelSerializer):
+    # password = make_password(validated_data['password'])
+    def validate_password(self, value: str) -> str:
+        return make_password(value)
+
     class Meta:
         model = User
         fields = ["id", "username", "password", "email",
