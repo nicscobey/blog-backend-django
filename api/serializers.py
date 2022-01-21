@@ -1,4 +1,4 @@
-from api.models import Blog
+from api.models import Blog, Comment, Reply
 from django.contrib.auth.models import User, Group
 from rest_framework.serializers import HyperlinkedModelSerializer, ModelSerializer, SerializerMethodField
 from django.contrib.auth.hashers import make_password
@@ -36,6 +36,28 @@ class BlogSerializer(ModelSerializer):
     #         print('🌴🌴🌴')
     #         print(self)
     #         print(request)
+
+
+class CommentSerializer(ModelSerializer):
+
+    # author = UserSerializer()
+    # blog = BlogSerializer()
+
+    class Meta:
+        model = Comment
+        fields = ["id", "created_at", "updated_at",
+                  "author", "content", "blog"]
+
+
+class ReplySerializer(ModelSerializer):
+
+    # author = UserSerializer()
+    # blog = BlogSerializer()
+
+    class Meta:
+        model = Reply
+        fields = ["id", "created_at", "updated_at",
+                  "author", "content", "comment"]
 
 
 class GroupSerializer(HyperlinkedModelSerializer):

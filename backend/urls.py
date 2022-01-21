@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from api.views import BlogViews, UserViews
+from api.views import BlogViews, UserViews, CommentViews, ReplyViews
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -26,6 +26,8 @@ from rest_framework_simplejwt.views import (
 router = DefaultRouter()
 router.register(r'blog', BlogViews)
 router.register(r'user', UserViews)
+router.register(r'comment', CommentViews)
+router.register(r'reply', ReplyViews)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
