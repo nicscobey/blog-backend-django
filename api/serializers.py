@@ -15,6 +15,21 @@ class UserSerializer(ModelSerializer):
                   "first_name", "last_name", "groups"]
 
 
+class CommentSerializer(ModelSerializer):
+
+    # author = UserSerializer()
+    # blog = BlogSerializer()
+
+    class Meta:
+        model = Comment
+        fields = ["id", "created_at", "updated_at",
+                  "author", "content", "blog"]
+
+    def to_representation(self, instance):
+        self.fields['author'] = UserSerializer(read_only=True)
+        return super(CommentSerializer, self).to_representation(instance)
+
+
 class BlogSerializer(ModelSerializer):
 
     # author = SerializerMethodField('get_id_from_author')
@@ -23,8 +38,11 @@ class BlogSerializer(ModelSerializer):
     class Meta:
         model = Blog
         fields = ["id", "title", "subtitle", "content",
-                  "theme", "created_at", "updated_at", "author", "published"]
+                  "theme", "created_at", "updated_at", "author", "published", "banner"]
 
+    def to_representation(self, instance):
+        self.fields['author'] = UserSerializer(read_only=True)
+        return super(BlogSerializer, self).to_representation(instance)
     # def get_id_from_author(self, blog):
     #     author = blog.author.id
     #     print(author)
@@ -38,17 +56,6 @@ class BlogSerializer(ModelSerializer):
     #         print(request)
 
 
-class CommentSerializer(ModelSerializer):
-
-    # author = UserSerializer()
-    # blog = BlogSerializer()
-
-    class Meta:
-        model = Comment
-        fields = ["id", "created_at", "updated_at",
-                  "author", "content", "blog"]
-
-
 class ReplySerializer(ModelSerializer):
 
     # author = UserSerializer()
@@ -58,6 +65,10 @@ class ReplySerializer(ModelSerializer):
         model = Reply
         fields = ["id", "created_at", "updated_at",
                   "author", "content", "comment"]
+
+    def to_representation(self, instance):
+        self.fields['author'] = UserSerializer(read_only=True)
+        return super(ReplySerializer, self).to_representation(instance)
 
 
 class GroupSerializer(HyperlinkedModelSerializer):
